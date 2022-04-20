@@ -37,7 +37,7 @@ RLEListResult RLEListAppend(RLEList list, char value)
      RLEList helper=list;
      if (list==NULL||value=='\0')
      {
-         RLE_LIST_NULL_ARGUMENT;
+         return RLE_LIST_NULL_ARGUMENT;
      }
      
      while (helper->next!=NULL)
@@ -45,7 +45,7 @@ RLEListResult RLEListAppend(RLEList list, char value)
          helper=helper->next;
      }
      
-     if (helper->character==NULL)
+     if (helper->character=='\0')
      {
          helper->character=value;
          helper->occur++;
@@ -76,7 +76,7 @@ RLEListResult RLEListAppend(RLEList list, char value)
 int RLEListSize(RLEList list)
 {
     int count = 0 ;
-    if(list=NULL)
+    if(!list)
       {
            return -1 ;
       } 
@@ -143,7 +143,7 @@ RLEListResult RLEListRemove(RLEList list, int index)
          else
             {
                 list=helper->next;
-                list->prev==NULL;
+                
             }    
          free(next_helper);
         }
@@ -155,12 +155,12 @@ char RLEListGet(RLEList list, int index, RLEListResult *result)
 { 
     if (!list)
     {
-        result = RLE_LIST_NULL_ARGUMENT ;
+        *result = RLE_LIST_NULL_ARGUMENT ;
         return 0;
     }
     if (RLEListSize(list)<index||index<0)
     {
-        result = RLE_LIST_INDEX_OUT_OF_BOUNDS ;
+        *result = RLE_LIST_INDEX_OUT_OF_BOUNDS ;
         return 0;
     }
     int current_index = 0;
@@ -200,20 +200,20 @@ char* RLEListExportToString(RLEList list, RLEListResult* result)
   char *string=(char*)malloc(sizeof(char)*((count_nodes(list)*3+1)));
   if (!list||string==NULL)
     {
-        result = RLE_LIST_NULL_ARGUMENT ;
+        *result = RLE_LIST_NULL_ARGUMENT ;
         return NULL;
     }
-   string ='/0';
+   string ="/0";
    RLEList helper = list ;
-   char clean='/0';
+   char clean="/0";
    char *extract_ch=(char*)malloc(sizeof(char)*3);
    while (helper!=NULL)
    {    
-       strcat(extract_ch,helper->character);
-       strcat(extract_ch,helper->occur);
-       strcat(extract_ch,'\\n');
-       strcat(string,extract_ch);
-       strcpy(extract_ch,&clean);
+       strcat(*extract_ch,helper->character);
+       strcat(*extract_ch,helper->occur);
+       strcat(*extract_ch,'\\n');
+       strcat(string,*extract_ch);
+       strcpy(*extract_ch,&clean);
        helper=helper->next;
 
    }
@@ -230,7 +230,7 @@ RLEListResult RLEListMap(RLEList list, MapFunction map_function)
     while (helper)
     {
         helper->character=map_function(helper->character);
-        helper = helper->character;
+        helper = helper->next;
     }
     return RLE_LIST_SUCCESS;
 }

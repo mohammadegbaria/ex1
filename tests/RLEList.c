@@ -203,9 +203,9 @@ char* RLEListExportToString(RLEList list, RLEListResult* result)
         *result = RLE_LIST_NULL_ARGUMENT ;
         return NULL;
     }
-   *string ='';
+   *string ="";
    RLEList helper = list ;
-   char clean='';
+   char clean="";
    char *extract_ch=(char*)malloc(sizeof(char)*3);
    while (helper!=NULL)
    {    

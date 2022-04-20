@@ -210,10 +210,9 @@ char* RLEListExportToString(RLEList list, RLEListResult* result)
    while (helper!=NULL)
    {    
        char occur_char =(char)helper->occur;
-       char jumping [3]={'\','\','n''};
        strcat(extract_ch,&helper->character);
        strcat(extract_ch,&occur_char);
-       strcat(extract_ch,jumping);
+       strcat(extract_ch,&'\\n');
        strcat(string,extract_ch);
        strcpy(extract_ch,&clean);
        helper=helper->next;

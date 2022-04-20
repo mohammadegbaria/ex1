@@ -203,13 +203,14 @@ char* RLEListExportToString(RLEList list, RLEListResult* result)
         *result = RLE_LIST_NULL_ARGUMENT ;
         return NULL;
     }
-   string ='/0';
+   *string ='/0';
    RLEList helper = list ;
    char clean='/0';
    char *extract_ch=(char*)malloc(sizeof(char)*3);
    while (helper!=NULL)
    {    
        char occur_char =(char)helper->occur;
+       char jumping =""
        strcat(extract_ch,&helper->character);
        strcat(extract_ch,&occur_char);
        strcat(extract_ch,'\\n');
